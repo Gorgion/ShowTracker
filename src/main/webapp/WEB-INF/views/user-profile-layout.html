@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>        
+    </head>
+    <body>
+        <div data-th-fragment="navbar (active)" data-th-remove="tag">            
+            <ul class="nav nav-pills nav-stacked">
+                <li data-th-class="${'userAccount' == active} ? 'active'">
+                    <a data-th-href="@{/auth/user/edit}" data-th-text="#{user.account}" >User account</a>
+                </li>
+                <li data-th-class="${'changePassword' == active} ? 'active'">
+                    <a data-th-href="@{/auth/user/edit/password}" data-th-text="#{password.change}" >Change password</a>
+                </li>
+                <li data-th-class="${'accountStatictics' == active} ? 'active'">
+                    <a data-th-href="@{/auth/user/statistics}" data-th-text="#{user.account.statistics}" >Account statistics</a>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

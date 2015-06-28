@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title data-th-text="#{title.shows}">TODO supply a title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../../../resources/assets/css/bootstrap.min.css" data-th-href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link href="../../../resources/assets/css/custom.css" data-th-href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            #newShowForm {
+                margin-top: 50px;
+                margin-bottom: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div data-th-include="layout :: head"></div>        
+
+        <div class="container">
+            <!--            <h1>LIST</h1>
+                        <h1 th:text="${#locale}"></h1>-->
+            <div id="jsSearchBox">
+                <!--<input type="search" name="searchBox" placeholder="Enter show name..." />-->
+            </div>
+
+            <div  id="newShowForm" class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <form data-th-action="@{/auth/shows/add}" method="post">
+                        <!--<div >-->
+                        <div class="input-group">
+                            <input name="name" type="text" class="form-control" data-th-placeholder="#{form.input.placeholder.show.name}" required=""/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary" data-th-text="#{add}"></button>
+                            </span>
+                        </div>
+                        <!--</div>-->
+                    </form>
+                </div>
+            </div>
+
+            <div class="row text-center">
+                <a href="#" data-th-href="'#' + ${entry.key}" data-th-text="${entry.key}" data-th-each="entry : ${shows.shows}" class="btn btn-link btn-lg"></a>
+            </div>
+            <hr />
+            <div data-th-each="entry : ${shows.shows}">                
+                
+                <h1 data-th-id="${entry.key}" data-th-text="${entry.key}">Key</h1>
+                
+                <div class="panel-group" id="accordion">
+                    <div>
+                    <div data-th-each="show : ${entry.value}"  class="panel " data-th-classappend="${show.finale}? panel-default : panel-success">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-sm-2 text-right col-sm-push-10">                            
+                                    <h2>                                
+                                        <small>
+                                            <a data-th-href="@{'/auth/shows/edit/' + ${show.id}}" data-th-text="#{edit}">Edit</a>
+                                        </small>
+                                    </h2>
+                                </div>
+                                <div class="col-sm-7 col-sm-pull-2">
+                                    <h2  data-th-text="${show.name}">
+                                    </h2>
+                                </div>
+                                <div class="col-sm-3 col-sm-pull-2">
+                                    <h2 ><small data-th-text="|S${show.series}E${show.episode}|"></small></h2>
+                                </div>
+                            </div>
+                            <div class="" data-th-unless="${#strings.isEmpty(show.note)}" data-th-remove="tag">
+                                <div class="panel panel-default">
+    <!--<div class="col-sm-12" data-th-unless="${#strings.isEmpty(show.note)}" data-th-text="#{show.note} + ':' + ${show.note}"></div>-->
+                                    <p class="panel-body" data-th-text="${show.note}">Note</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>         
+            </div>
+            
+<!--            <div class="panel-group" id="accordion">
+                <div>
+                <div data-th-each="show,iterStat : ${shows.shows}"  class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-2 text-right col-sm-push-10">                            
+                                <h2>                                
+                                    <small>
+                                        <a data-th-href="@{'/auth/shows/edit/' + ${show.id}}" data-th-text="#{edit}">Edit</a>
+                                    </small>
+                                </h2>
+                            </div>
+                            <div class="col-sm-7 col-sm-pull-2">
+                                <h2  data-th-text="${show.name}">
+                                </h2>
+                            </div>
+                            <div class="col-sm-3 col-sm-pull-2">
+                                <h2 ><small data-th-text="|S${show.series}E${show.episode}|"></small></h2>
+                            </div>
+                        </div>
+                        <div class="" data-th-unless="${#strings.isEmpty(show.note)}" data-th-remove="tag">
+                            <div class="panel panel-default">
+                                                                <div class="col-sm-12" data-th-unless="${#strings.isEmpty(show.note)}" data-th-text="#{show.note} + ':' + ${show.note}"></div>
+                                <p class="panel-body" data-th-text="${show.note}">Note</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>    -->
+            </div>                
+        </div>
+
+        <footer data-th-include="layout :: foot"></footer>
+
+        <div data-th-replace="layout :: bottom-scripts"></div>
+
+        <!--         Bootstrap core JavaScript
+            ================================================== 
+                 Placed at the end of the document so the pages load faster 
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                <script data-th-src="@{/assets/js/bootstrap.min.js}"></script>-->
+    </body>
+</html>

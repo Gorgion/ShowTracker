@@ -1,0 +1,4 @@
+error.badCredentials=Chybn\u00e9 u\u017eivatelsk\u00e9 jm\u00e9no nebo heslo!
+error.exist.email=Email je ji\u017e pou\u017e\u00edv\u00e1n.
+error.passwordsNotEqual=hesla nejsou stejn\u00e1
+error.service=Vyskytla se chyba slu\u017eby.

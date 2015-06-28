@@ -1,0 +1,13 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Start Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <%--<c:redirect url="/auth/shows" />--%>
+        <h1>INDEX</h1>
+        <a th:href="@{/auth/shows}" >">AUTH</a>
+    </body>
+</html>

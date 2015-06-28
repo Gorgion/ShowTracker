@@ -1,0 +1,141 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.sf.showtracker.controller;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import net.sf.showtracker.dao.UserAccountAuthDaoImpl;
+import net.sf.showtracker.domain.LoginDetails;
+import net.sf.showtracker.domain.UserAccount;
+import net.sf.showtracker.domain.UserAccountAuth;
+import net.sf.showtracker.exception.ServiceException;
+import net.sf.showtracker.security.service.RememberMeService;
+import net.sf.showtracker.service.LoginDetailsService;
+import net.sf.showtracker.service.UserAccountAuthService;
+import net.sf.showtracker.service.UserAccountService;
+import net.sf.showtracker.service.UserAccountServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ *
+ * @author Tomáš
+ */
+@Controller
+public class WebControler
+{
+
+    @Autowired
+    private RememberMeService rememberMeService;
+
+    @Autowired
+    private LoginDetailsService lds;
+//    private UserAccountAuthService userService;
+//
+    @Autowired
+    private UserAccountService uas;
+//    private UserAccountAuthDaoImpl userService;
+
+//    @RequestMapping("/hello")
+//    public String hello(@RequestParam(value = "name", required = false, defaultValue = "TOM") String name, Model model)
+//    {
+//        model.addAttribute("name", name);
+//        return "hw";
+//    }
+    @RequestMapping("/")
+    public String welcome(Model model, HttpServletRequest request)//@RequestParam(value = "name", required = false, defaultValue = "TOM") String name, Model model)
+    {
+//        UserAccount ua = uas.getByEmail("root@mail.cz");
+//        System.out.println("\n---->" + ua);
+//        if(ua != null)
+//        {
+//            LoginDetails ld = new LoginDetails();
+//            ld.setAccountId(ua.getId());
+////            ld.setAccount(ua);
+//            ld.setTime(Calendar.getInstance().getTime());
+//            
+//            System.out.println("-------LD\n" + ld);
+//            lds.create(ld);
+//        }
+        
+//        System.out.println("\n-----LIST\n" + lds.getAllByAccount(ua));
+//        Calendar c = Calendar.getInstance();
+//        
+//        System.out.println("\ntime(---)>" + c.getTime() + "[" + c.getTimeZone() + "]");
+//        c = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+//        System.out.println("time(gmt)>" + c.getTime() + "[" + c.getTimeZone() + "]");
+//        c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+//        System.out.println("time(utc)>" + c.getTime() + "[" + c.getTimeZone() + "]");
+//        c =  Calendar.getInstance(Locale.UK);
+//        System.out.println("---\ntime(lus)>" + c.getTime() + "[" + c.getTimeZone() + "]");
+//        
+//        DateFormat full = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
+//        full.setTimeZone(TimeZone.getTimeZone("GMT"));
+//        System.out.println("---\n>" + full.format(c.getTime()) );
+        
+        return "index";
+    }
+    
+//    @RequestMapping(value = "/test", method = RequestMethod.POST)
+//    public String test(@RequestParam String data, HttpServletRequest req) throws UnsupportedEncodingException
+//    {
+//        System.out.println("\n---->" + data + "<");
+//        
+//        System.out.println(">" + req.getCharacterEncoding());
+//        System.out.println(">>" + req.getContentType());
+//        req.setCharacterEncoding("utf-8");
+//        System.out.println(">" + req.getCharacterEncoding());
+//        System.out.println("\n---->" + data + "<");
+//        System.out.println("#" + req.getParameter("data"));
+//        
+//        return "index";
+//    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout,
+            //@RequestParam(value = "session", required = false) String session,
+            Model model, HttpServletRequest request) throws Exception
+    {
+        if (error != null)
+        {
+            model.addAttribute("error", "error.badCredentials");
+        }
+
+        if (logout != null)
+        {
+            model.addAttribute("msg", "msg.logout");
+        }
+//if(true){throw new ServiceException();}
+        return "login";
+    }
+
+//    @ExceptionHandler(Exception.class)
+//	public ModelAndView handleAllException(Exception ex) {
+// 
+//		ModelAndView model = new ModelAndView("error");
+//		model.addObject("httpErrorCode", "500");
+// 
+//		return model;
+// 
+//	}
+}

@@ -1,0 +1,56 @@
+<%-- 
+    Document   : list
+    Created on : 22.6.2014, 16:26:56
+    Author     : Tomáš
+--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <%--<c:url value="/j_spring_security_logout" var="logoutUrl" />--%>
+        <c:url value="/logout" var="logoutUrl" />
+
+        <form action="${logoutUrl}" method="post" id="logoutForm">
+            <input type="hidden" 
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}" />
+        </form>
+        <form action="<c:url value="/logout"/>" method="post">
+            <input type="submit" value="Logout" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+
+        <script>
+            function formSubmit() {
+                document.getElementById("logoutForm").submit();
+            }
+        </script>
+
+        <h1>SHOWS list</h1>
+        <a href="${pageContext.request.contextPath}/auth/shows/add">FORM</a>
+
+        <c:if test="${pageContext.request.userPrincipal.name != null}">
+            <h2>
+                Welcome : ${pageContext.request.userPrincipal.name} | <a
+                    href="javascript:formSubmit()"> Logout</a>
+            </h2>
+        </c:if>
+
+        <hr>
+        <div>
+            <c:forEach items="${shows}" var="show">
+                <div class="item">
+                    <h3><c:out value="${show.name}" /></h3>
+                    <hr>
+                </div>
+            </c:forEach>
+        </div>
+    </body>
+</html>

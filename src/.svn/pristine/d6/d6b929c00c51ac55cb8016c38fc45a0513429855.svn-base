@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title data-th-text="#{title.lostPassword}">TODO supply a title</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="../../../resources/assets/css/bootstrap.min.css" data-th-href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link href="../../../resources/assets/css/custom.css" data-th-href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />        
+    </head>
+    <body>
+        <div data-th-include="layout :: head"></div>
+
+        <div class="container">
+            <div>
+                <p data-th-if="${msg}" data-th-utext="#{${msg}}" class="alert alert-info col-sm-5 col-sm-offset-2"></p>
+                                
+                <form action="#" method="post" data-th-action="@{/account/lost-password/restore}" data-th-object="${accountPassword}" class="form-horizontal" novalidate="">
+                    <div data-th-if="${#fields.hasGlobalErrors()}" class="col-sm-offset-2 col-sm-10 has-error">
+                        <p data-th-each="err : ${#fields.globalErrors()}" data-th-text="${err}">Global errors</p>
+                    </div>
+
+                    <input type="hidden" data-th-value="*{id}" data-th-name="id" />  
+                    <input type="hidden" data-th-value="${token}" data-th-name="token" />
+
+                    <div class="form-group" data-th-classappend="${#fields.hasErrors('password')}? has-error">
+                        <!--<label data-th-for="password" data-th-text="#{form.passwd} + ':'" class="control-label col-sm-2">Password</label>-->
+                        <div class="col-sm-offset-2 col-sm-5">
+                            <input type="password" data-th-field="*{password}" class="form-control" maxlength="50" data-th-placeholder="#{form.passwd}" />
+                        </div>
+                        <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}">Password error</div>
+                    </div>
+                    <div class="form-group" data-th-classappend="${#fields.hasErrors('password')}? has-error">
+                        <!--<label data-th-for="password" data-th-text="#{form.passwd.confirm} + ':'" class="control-label col-sm-2">Confirm Password</label>-->
+                        <div class="col-sm-offset-2 col-sm-5">
+                            <input type="password" data-th-field="*{confirmPassword}" class="form-control" maxlength="50" data-th-placeholder="#{form.passwd.confirm}" />
+                        </div>
+                        <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('confirmPassword')}" data-th-errors="*{confirmPassword}">Password error</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" data-th-text="#{password.change}">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+        <footer data-th-include="layout :: foot"></footer>
+
+        <div data-th-replace="layout :: bottom-scripts"></div>
+    </body>
+</html>

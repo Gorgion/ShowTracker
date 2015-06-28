@@ -1,0 +1,57 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.sf.showtracker.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import net.sf.showtracker.exception.ServiceException;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+
+/**
+ *
+ * @author Tomáš
+ */
+@ControllerAdvice
+public class GlobalExceptionController
+{
+
+//    @ExceptionHandler(ServiceException.class)
+//    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+//    public String handleCustomException(ServiceException ex, Model model)
+//    {
+//
+////		ModelAndView model = new ModelAndView("error/generic_error");
+////		model.addObject("errCode", ex.getErrCode());
+////		model.addObject("errMsg", ex.getErrMsg());
+//        model.addAttribute("errorCode", "500");
+//        model.addAttribute("errorMsg", "error.msg.500");
+//
+//        return "error";
+//
+//    }
+    
+    @ExceptionHandler(ServiceException.class)
+    public ModelAndView handleServiceException(ServiceException ex)
+    {
+        ModelAndView model = new ModelAndView("error");
+        model.addObject("errorCode", "500");
+
+        return model;
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleAllException(Exception ex)
+    {
+        ModelAndView model = new ModelAndView("error");
+        model.addObject("errorCode", "500");
+
+        return model;
+    }
+}

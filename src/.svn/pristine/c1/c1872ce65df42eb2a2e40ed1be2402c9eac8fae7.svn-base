@@ -1,0 +1,134 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.sf.showtracker.dao;
+
+import java.util.List;
+import net.sf.showtracker.domain.Show;
+import net.sf.showtracker.domain.UserAccount;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ *
+ * @author TomĂˇĹˇ
+ */
+@Repository
+@Transactional
+public class ShowDaoImpl implements ShowDao
+{
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    private Session getCurrentSession()
+    {
+        return sessionFactory.getCurrentSession();
+    }
+
+    @Override    
+    public Long create(Show show)
+    {//System.out.println("\n--dao-->" + show +"<");
+        return (Long)getCurrentSession().save(show);
+    }
+
+    @Override
+    public void update(Show show)
+    {        
+        getCurrentSession().update(show);
+    }
+
+    @Override
+    public Show getById(Long id)
+    {
+        return (Show)getCurrentSession().get(Show.class, id);
+    }
+
+    @Override
+    public void remove(Show show)
+    {
+//        System.out.println("\n---DAO REM--\n" + show);
+        getCurrentSession().delete(show);
+//        System.out.println("\n---DAO REM DONE--");
+    }
+
+    @Override
+    public List<Show> getAllForUser(UserAccount user)
+    {
+        return getCurrentSession().createCriteria(Show.class)
+                .add(Restrictions.eq("user", user)).addOrder(Order.asc("name")).list();
+    }
+}
+
+/*public class ShowDaoImpl implements ShowDao
+ {
+ @PersistenceContext
+ private EntityManager entityManager;
+
+ @Override
+ public EntityManager getEntityManager()
+ {
+ return entityManager;
+ }
+
+ @Override
+ public void setEntityManager(EntityManager entityManager)
+ {
+ this.entityManager = entityManager;
+ }
+    
+ private EntityManager em() {
+ if (entityManager == null) {            
+ throw new IllegalStateException("the entity manager is not set");
+ }
+ return entityManager;
+ }
+    
+ @Override
+ public Show create(Show show)
+ {
+ em().persist(show);
+ return show;
+ }
+    
+ @Override
+ public Show update(Show show)
+ {
+ em().merge(show);
+ return show;
+ }
+    
+ @Override
+ public Show getById(long id)
+ {
+ return em().find(Show.class, id);
+ }
+    
+ @Override
+ public void remove(Show show)
+ {
+ em().remove(show);
+ }
+    
+ @Override
+ public List<Show> getAllForUser()
+ {
+ System.out.println("------- START ----------");
+ //for(Object sh : em().createQuery("SELECT s FROM show s").getResultList())
+ {
+ //  System.out.println(">>" + sh);
+ }
+ System.out.println("--------- STOP -----------");
+        
+ return null;
+ //        return em().createQuery("SELECT s FROM show s").getResultList();
+ }
+ }*/

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title data-th-text="#{title.login}">TODO supply a title</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!--        <style>
+                    .error {
+                        padding: 15px;
+                        margin-bottom: 20px;
+                        border: 1px solid transparent;
+                        border-radius: 4px;
+                        color: #a94442;
+                        background-color: #f2dede;
+                        border-color: #ebccd1;
+                    }
+        
+                    .msg {
+                        padding: 15px;
+                        margin-bottom: 20px;
+                        border: 1px solid transparent;
+                        border-radius: 4px;
+                        color: #31708f;
+                        background-color: #d9edf7;
+                        border-color: #bce8f1;
+                    }
+        
+                    #login-box {
+                        width: 300px;
+                        padding: 20px;
+                        margin: 100px auto;
+                        background: #fff;
+                        -webkit-border-radius: 2px;
+                        -moz-border-radius: 2px;
+                        border: 1px solid #000;
+                    }
+                </style>-->
+        <link href="../../../resources/assets/css/bootstrap.min.css" data-th-href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link href="../../../resources/assets/css/custom.css" data-th-href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />
+    </head>
+    <!--    <body> onload='document.loginForm.username.focus();'>-->
+    <body>
+        <div data-th-replace="layout :: head"></div>
+        <div class="container">
+            <div id="login-box" class="panel panel-default col-sm-4 col-sm-offset-4">
+
+                <!--<h3 th:text="'>>' + ${username}">Login with Username and Password</h3>-->
+                <!--<h1 th:text="'tar>' + ${targetUrl}"></h1>-->
+                
+                <div class="panel-body">
+                    <div data-th-if="${error}" data-th-text="#{${error}}" class="alert alert-danger "></div>
+                    <div data-th-if="${msg}" data-th-text="#{${msg}}" class="alert alert-info  "></div>
+
+<!--                    <form name='loginForm' data-th-action="@{'/login?targetUrl=' + ${targetUrl}}" action="#" method='POST' role="form" class="form-horizontal">                -->
+                    <form name='loginForm' data-th-action="@{/login}" action="#" method='POST' role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <!--<label for="username" class="col-sm-2 control-label" data-th-text="#{form.username} + ':'">User:</label>-->
+                            <div data-th-if="!${#strings.isEmpty(email)}" class="">
+                                <p class="form-control-static" data-th-text="${email}">Username</p>
+                                <input type='hidden' id='username' name='username' data-th-value='${email}'/>
+<!--                                <input type='hidden' id='username' name='username' class="form-control" data-th-placeholder="#{form.input.placeholder.enter} + ' ' + #{form.username}" autofocus="" />-->
+                            </div>
+                            <div data-th-if="${#strings.isEmpty(email)}" class="">                                
+                                <input type='email' id='username' name='username' class="form-control" data-th-placeholder="#{form.input.placeholder.enter} + ' ' + #{form.email}" autofocus="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <!--<label for="password" class="col-sm-2 control-label" data-th-text="#{form.passwd} + ':'">Password:</label>-->
+                            <div class="">
+                                <input type='password' id='password' name='password' class="form-control" data-th-placeholder="#{form.input.placeholder.enter} + ' ' + #{form.passwd}" />
+                            </div>
+                        </div>
+                        <div class="form-group"  data-th-if="${loginUpdate} == null">                    
+                            <div class="">
+                                <div class="checkbox">
+                                    <label>
+                                         <input type="checkbox" name="remember-me" /> <span data-th-text="#{form.rememberme}">Remember me</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                            <!--<div class="col-sm-12">-->
+                                <button type="submit" class="btn btn-primary"  data-th-text="#{shared.signin}">Login</button>
+                                <a href="#" data-th-href="@{/account/lost-password}" data-th-text="#{lostPassword}" class="btn btn-link">Forgot password?</a>
+                            </div>
+                            <!--</div>-->
+                        </div>                        
+                    </form>
+                </div>
+            </div>         
+        </div>
+        
+        <footer data-th-replace="layout :: foot"></footer>
+
+        <div data-th-replace="layout :: bottom-scripts"></div>
+    </body>
+</html>

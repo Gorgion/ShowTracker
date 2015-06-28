@@ -1,0 +1,3 @@
+DROP TABLE `show_tracker`;
+DROP TABLE `show`;
+DROP TABLE `user`;

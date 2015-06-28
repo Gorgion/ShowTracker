@@ -1,0 +1,46 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.sf.showtracker.config;
+
+/**
+ *
+ * @author Tomáš
+ */
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+import org.springframework.web.filter.CharacterEncodingFilter;
+
+@Order(1)
+public class SpringSecurityInitializer extends AbstractSecurityWebApplicationInitializer
+{
+    @Override
+    protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
+        FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("encodingFilter", new CharacterEncodingFilter());
+        characterEncodingFilter.setInitParameter("encoding", "UTF-8");
+        characterEncodingFilter.setInitParameter("forceEncoding", "true");
+        characterEncodingFilter.addMappingForUrlPatterns(null, false, "/*");
+    }
+    
+//    @Override
+//    public void onStartup(ServletContext servletContext) throws ServletException {
+//      FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encoding-filter", new CharacterEncodingFilter());
+//      encodingFilter.setInitParameter("encoding", "UTF-8");
+//      encodingFilter.setInitParameter("forceEncoding", "true");
+//      encodingFilter.addMappingForUrlPatterns(null, true, "/*");
+//}
+//
+//    @Override
+//    protected void insertFilters(javax.servlet.ServletContext servletContext, javax.servlet.Filter... filters)
+//    {
+//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+//        characterEncodingFilter.setEncoding("UTF-8");
+//        characterEncodingFilter.setForceEncoding(true);
+//
+//    }
+}

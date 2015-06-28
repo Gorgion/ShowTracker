@@ -1,0 +1,50 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.sf.showtracker.security;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+import net.sf.showtracker.domain.LoginDetails;
+import net.sf.showtracker.domain.UserAccountAuth;
+import net.sf.showtracker.service.LoginDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
+
+/**
+ *
+ * @author Tomáš
+ */
+@Component
+public class AuthenticationApplicationListener implements ApplicationListener<InteractiveAuthenticationSuccessEvent>
+{
+
+    @Autowired
+    private LoginDetailsService loginDetailsService;
+
+    @Override
+    public void onApplicationEvent(InteractiveAuthenticationSuccessEvent event)
+    {
+        Authentication authentication = event.getAuthentication();
+        
+//        System.out.println("\n\n----AUTH----\n" + authentication);
+
+        if (authentication.getPrincipal() instanceof UserAccountAuth)
+        {
+//            System.out.println("\n-----aaa");
+            LoginDetails ld = new LoginDetails();
+            ld.setAccountId(((UserAccountAuth) authentication.getPrincipal()).getUserAccountId());
+            ld.setTime(Calendar.getInstance().getTime());
+
+//            System.out.println("-->" + ld);
+            loginDetailsService.create(ld);
+//            System.out.println("----done--");
+        }
+    }
+
+}

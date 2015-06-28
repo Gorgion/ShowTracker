@@ -1,0 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package net.sf.showtracker.security.service;
+
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * Service for remember-me authentication.
+ *
+ * @author Tomáš Svoboda
+ */
+public interface RememberMeService
+{
+
+    /**
+     * get targetURL from session
+     */
+    String getRememberMeTargetUrlFromSession(HttpServletRequest request);
+
+    /**
+     * Check if user is login by remember me cookie, refer
+     * org.springframework.security.authentication.AuthenticationTrustResolverImpl
+     */
+    boolean isRememberMeAuthenticated();
+
+    /**
+     * save targetURL in session
+     */
+    void setRememberMeTargetUrlToSession(HttpServletRequest request, String targetUrl);
+    
+}

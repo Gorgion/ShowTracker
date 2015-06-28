@@ -1,0 +1,136 @@
+-- CREATE TABLE show (
+--     id BIGINT AUTO_INCREMENT,
+--     name VARCHAR(100) NOT NULL,
+--     CONSTRAINT show_pkey PRIMARY KEY (id)
+-- );
+
+CREATE TABLE `user` (
+    id BIGINT AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100),
+    email VARCHAR(50) NOT NULL UNIQUE, 
+    CONSTRAINT user_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE `user_roles` (
+    user_role_id BIGINT AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    role VARCHAR(45),
+    CONSTRAINT user_pkey PRIMARY KEY (user_role_id)
+);
+
+-- CREATE TABLE `show_tracker` (
+--     show_id BIGINT,
+--     user_id BIGINT,
+--     series SMALLINT,
+--     episode SMALLINT,
+--     note VARCHAR(255),
+--     CONSTRAINT show_tracker_pkey PRIMARY KEY (show_id, user_id),
+--     CONSTRAINT `show_id_fkey` FOREIGN KEY(show_id) REFERENCES `show`(id)
+--         ON DELETE CASCADE,
+--     CONSTRAINT `user_id_fkey` FOREIGN KEY(user_id) REFERENCES `user`(id)
+--         ON DELETE CASCADE
+-- );
+
+CREATE TABLE `show` (
+    id BIGINT AUTO_INCREMENT,
+    user_id BIGINT,
+    name VARCHAR(100) NOT NULL,
+    series SMALLINT,
+    episode SMALLINT,
+    note VARCHAR(255),
+    CONSTRAINT `user_id_fkey` FOREIGN KEY(user_id) REFERENCES `user`(id)
+        ON DELETE CASCADE
+);
+
+
+
+-------------
+
+CREATE  TABLE users (
+  id BIGINT AUTO_INCREMENT,
+  username VARCHAR(45) NOT NULL UNIQUE,
+  password VARCHAR(60) NOT NULL ,
+  email VARCHAR(50) NOT NULL UNIQUE,
+  enabled TINYINT NOT NULL DEFAULT 1 ,
+  PRIMARY KEY (id));
+ 
+CREATE TABLE user_roles (
+  user_role_id INT(11) NOT NULL AUTO_INCREMENT,
+  username VARCHAR(45) NOT NULL,
+  ROLE VARCHAR(45) NOT NULL,
+  PRIMARY KEY (user_role_id),
+  UNIQUE KEY uni_username_role (ROLE,username),
+  KEY fk_username_idx (username),
+  CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users (username));
+
+-------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE  `show` (
+`id` BIGINT(20) AUTO_INCREMENT PRIMARY KEY ,
+`user_id` BIGINT(20),
+`name` VARCHAR( 100 ) NOT NULL ,
+`series` SMALLINT,
+`episode` SMALLINT,
+`note` VARCHAR( 255 ) ,
+CONSTRAINT  `user_id_fkey` FOREIGN KEY ( `user_id` ) REFERENCES `users`( `id` ) ON DELETE CASCADE
+)
+
+CREATE TABLE `persistent_logins` (
+    `username` VARCHAR(64) NOT NULL,
+    `series` VARCHAR(64) NOT NULL,
+    `token` VARCHAR(64) NOT NULL,
+    `last_used` TIMESTAMP NOT NULL,
+    PRIMARY KEY (`series`)
+);
+
+
+
+----------------
+
+CREATE TABLE `users` (
+    `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(50) NOT NULL,
+    `email` VARCHAR(50) NOT NULL UNIQUE,
+    PRIMARY KEY (`id`)
+);
+ 
+-- CREATE TABLE `users_auth` (
+-- --     `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+--     `user_id` BIGINT(20) NOT NULL,
+--     `password` VARCHAR(80) NOT NULL ,
+--     `enabled` TINYINT NOT NULL DEFAULT 1,
+--     PRIMARY KEY (`id`),
+--     CONSTRAINT `FK_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+-- );
+
+CREATE TABLE `users_auth` (
+--     `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `password` VARCHAR(80) NOT NULL ,
+    `enabled` TINYINT NOT NULL DEFAULT 1,
+    PRIMARY KEY (`user_id`),
+    CONSTRAINT `FK_USERS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+);
+
+CREATE TABLE `login_details` (
+--     `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+    `login_time` TIMESTAMP NOT NULL ,
+    PRIMARY KEY (`user_id`, `login_time`),
+    CONSTRAINT `FK_USERS_LOGIN_DETAILS` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+CREATE DEFINER=`adminECgYBVT`@`127.10.186.130` EVENT `login_details_delete_event` ON SCHEDULE EVERY 2 WEEK STARTS '2014-08-30 00:00:00' ON COMPLETION PRESERVE ENABLE DO delete ld1.* FROM `login_details` ld1 JOIN
+ (
+    select `user_id` from `login_details`
+    group by `user_id`
+    having count(`user_id`) > 10
+) ld2 
+ON ld1.`user_id` = ld2.`user_id`
+where ld1.`login_time` < CURRENT_TIMESTAMP - INTERVAL 2 month
+
+--CREATE EVENT `login_details_delete_event` ON SCHEDULE EVERY 2 WEEK STARTS '2014-09-01 00:00:00' ON COMPLETION PRESERVE ENABLE DO DELETE FROM login_details WHERE login_time < CURRENT_TIMESTAMP - INTERVAL 2 MONTH
+
+
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;

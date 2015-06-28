@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title data-th-text="#{title.shows}">TODO supply a title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../../../resources/assets/css/bootstrap.min.css" data-th-href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link href="../../../resources/assets/css/custom.css" data-th-href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />
+        <style type="text/css">
+            #newShowForm {
+                margin-top: 50px;
+                margin-bottom: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div data-th-include="layout :: head"></div>        
+
+        <div class="container">
+            <!--            <h1>LIST</h1>
+                        <h1 th:text="${#locale}"></h1>-->
+            <div id="jsSearchBox">
+                <!--<input type="search" name="searchBox" placeholder="Enter show name..." />-->
+            </div>
+
+            <div  id="newShowForm" class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <form data-th-action="@{/auth/shows/add}" method="post">
+                        <!--<div >-->
+                        <div class="input-group">
+                            <input name="name" type="text" class="form-control" data-th-placeholder="#{form.input.placeholder.show.name}" required=""/>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-primary" data-th-text="#{add}"></button>
+                            </span>
+                        </div>
+                        <!--</div>-->
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel-group" id="accordion">
+                <!--<div>-->
+                <div data-th-each="show,iterStat : ${shows.shows}" class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-sm-2 text-right col-sm-push-10">
+                            <!--<div class="col-xs-2 text-right col-xs-push-10">-->
+                                <h2>                                
+                                    <small>
+                                        <a data-th-href="@{'/auth/shows/edit/' + ${show.id}}" data-th-text="#{edit}">Edit</a>
+                                    </small>
+                                    <!--<a  data-toggle="collapse" data-parent="#accordion" data-th-href="'#collapseShow' + ${iterStat.index}" >Edit</a> |-->
+                                    <!--<a data-th-href="@{'/auth/shows/edit/' + ${show.id}}" data-th-text="#{edit}">Edit</a> |--> 
+                                    <!--<a href="#" data-th-text="#{delete}">Delete</a></small>-->
+                                </h2>
+                            </div>
+                            <div class="col-sm-7 col-sm-pull-2">
+                            <!--<div class="col-xs-7 col-xs-pull-2">-->    
+                                <h2  data-th-text="${show.name}">
+                                    <!--                                <a  data-toggle="collapse" data-parent="#accordion" data-th-href="'#collapseShow' + ${iterStat.index}" data-th-text="${show.name}"></a>                            -->
+                                </h2>
+                            </div>
+                            <!--                        </div>
+                                                    <div class="row">-->
+                            <!--                                                    <h4 data-th-text="'S' + ${show.series}"></h4>
+                                                                                <h4 data-th-text="'E' + ${show.episode}"></h4>
+                                                                                <h4 data-th-text="'Note: ' + ${show.note}"></h4>-->
+                            <!--<div class="col-xs-3 col-xs-pull-2">-->                                
+                            <div class="col-sm-3 col-sm-pull-2">
+                                <h2 ><small data-th-text="|S${show.series}E${show.episode}|"></small></h2>
+                            </div>
+                            <!--                            <div class="col-sm-3" data-th-unless="${#strings.isEmpty(show.note)}" data-th-text="#{show.note} + ':' + ${show.note}"></div>
+                            -->                            
+                            <!--                            <div class="" data-th-text="|S${show.series}E${show.episode}|"></div>
+                                                        <div class="" data-th-unless="${#strings.isEmpty(show.note)}" data-th-text="#{show.note} + ':' + ${show.note}"></div>-->
+
+                        </div>
+                        <div class="" data-th-unless="${#strings.isEmpty(show.note)}" data-th-remove="tag">
+                            <div class="panel panel-default">
+                                <!--                                <div class="col-sm-12" data-th-unless="${#strings.isEmpty(show.note)}" data-th-text="#{show.note} + ':' + ${show.note}"></div>-->
+                                <p class="panel-body" data-th-text="${show.note}">Note</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!--                    <div data-th-id="'collapseShow' + ${iterStat.index}" class="collapse panel-collapse">
+                                            <div class="panel-body">-->
+                    <!--                            <form action="#" data-th-action="@{/auth/shows/edit}"  method="post" data-th-object="${shows.shows[__${iterStat.index}__]}" class="form-horizontal" >                                  
+                                                    <input type="hidden" data-th-value="*{id}" data-th-name="id" />
+                    
+                                                    <div class="form-group">
+                                                        <label data-th-for="'name' + ${iterStat.index}" data-th-text="#{show.name} + ':'" class="col-sm-2 control-label" ></label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" data-th-id="'name' + ${iterStat.index}" class="form-control" data-th-value="*{name}" name="name" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label data-th-for="'series' + ${iterStat.index}" data-th-text="#{show.series} + ':'" class="col-sm-2 control-label"></label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" data-th-value="*{series}" class="form-control" data-th-name="series" data-th-id="'series' + ${iterStat.index}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label data-th-for="'episode' + ${iterStat.index}" data-th-text="#{show.episode} + ':'" class="col-sm-2 control-label"></label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" data-th-value="*{episode}" class="form-control" name="episode" data-th-id="'episode' + ${iterStat.index}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label data-th-for="'note' + ${iterStat.index}" data-th-text="#{show.note} + ':'" class="col-sm-2 control-label"></label>
+                                                        <div class="col-sm-10">
+                                                            <textarea rows="3" data-th-value="*{note}" data-th-text="*{note}" class="form-control" name="note" data-th-id="'note' + ${iterStat.index}" ></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-2 col-sm-10">
+                                                            <button type="submit" class="btn btn-primary" data-th-text="#{form.submit}">Submit</button>
+                                                            <button type="submit" class="btn btn-default" data-th-text="#{form.cancel}">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                </form>-->
+                    <!--                        </div>
+                                        </div>-->
+                </div>    
+            </div>                
+            <!--<div id="newShowForm" class="col-sm-8 col-sm-offset-2">
+                            <form data-th-action="@{/auth/shows/add}" method="post">
+                                <div >
+                                <div class="input-group">
+                                    <input name="name" type="text" class="form-control" data-th-placeholder="#{form.input.placeholder.show.name}" required=""/>
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary" data-th-text="#{add}"></button>
+                                    </span>
+                                </div>
+                                </div>
+                            </form>
+                        </div>-->
+        </div>
+
+        <footer data-th-include="layout :: foot"></footer>
+
+        <div data-th-replace="layout :: bottom-scripts"></div>
+
+        <!--         Bootstrap core JavaScript
+            ================================================== 
+                 Placed at the end of the document so the pages load faster 
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                <script data-th-src="@{/assets/js/bootstrap.min.js}"></script>-->
+    </body>
+</html>

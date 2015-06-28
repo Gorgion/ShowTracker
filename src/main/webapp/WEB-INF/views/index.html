@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<html>
+    <head>
+        <title data-th-text="#{title.index}">TODO supply a title</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="../../../resources/assets/css/bootstrap.min.css" data-th-href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link href="../../../resources/assets/css/custom.css" data-th-href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />        
+        <link href="../../../resources/assets/css/ekko-lightbox.min.css" data-th-href="@{/assets/css/ekko-lightbox.min.css}" rel="stylesheet" type="text/css" />        
+        <style type="text/css">
+            /*            body {
+                            height: 100%;
+                        }*/
+            /*            .jumbotron {
+                            height: 100%;
+                        }*/
+            #welcome {
+                margin-top: -20px;
+                /*padding-top: 100px;*/
+                /*height: 100%;*/
+                width: 100%;
+                /*                position: absolute;
+                                top: 0px;
+                                left: 0px;*/
+                background: url(./images/welcome.jpg) no-repeat center top; 
+                background-size: cover;
+                height: 600px;
+                /*line-height: 600px;*/
+                text-align: center;
+            }
+            
+            .vert-padding {
+                padding: 100px 0px;
+            }
+            /*#welcome .container{*/
+/*            .vert-center { 
+                margin: 100px 0px;*/
+                /*width: 100%;*/
+                /*vertical-align: middle;*/                    
+                /*margin: 0px auto;*/
+                /*height: 600px;*/
+                /*position: relative;*/
+                /*top: 50%;*/
+                /*transform: 			translateY(-50%);*/
+/*                width: 100%;
+  height: 60%;
+  min-width: 200px;*/
+  /*max-width: 400px;*/
+  /*padding: 40px;*/
+            /*}*/
+
+            /*#welcome {
+                margin-top: -20px;
+                background: url(./images/welcome.jpg) no-repeat center top; 
+                -webkit-background-size: 100% 100%;
+                -moz-background-size: 100% 100%;
+                -o-background-size: 100% 100%;
+                background-size: 100% 100%;
+            }*/
+            
+            .background-highlight {
+                background: #e7e7e7;
+            }
+        </style>    
+    </head>
+    <body>
+        <!--<div class="jumbotron " style="margin-top: -20px; ">-->
+        <div data-th-replace="layout :: head"></div>      
+        <!--<div class="container">-->
+        <!--        <div class="jumbotron" id="welcome" style="margin-top: -20px; ">-->
+        <div id="welcome" class="jumbotron vert-padding" >
+            <div  class="container">
+                <!--<div class="vert-center">-->
+                    <!--<img class="img-responsive" data-th-src="@{/images/welcome.jpg}" src="#" alt="" />-->
+                    <h2 class="text-uppercase background-highlight" style="margin-bottom: 30px" data-th-text="#{welcome.title}"></h2>
+                    <p class="lead background-highlight" style="margin-bottom: 50px" data-th-text="#{welcome.text}"></p>
+                    <p><a href="#" data-th-href="@{/register}" role="button" data-th-text="#{shared.signup}" class="btn btn-success btn-lg"></a> <a href="#explore" role="button" data-th-text="#{learnmore}" class="btn btn-default btn-lg"></a></p>
+                <!--</div>-->
+            </div>
+        </div>
+<!--        <form data-th-action="@{/test}" method="post" >
+            <input type="text" name="data" />
+            <button type="submit">Sub</button>
+        </form>-->
+        <div id="explore" class="jumbotron" style="background-color: #fff">
+            <div class="container">
+
+                <!--            <div class="row">
+                                <div class="col-sm-offset-4 col-sm-4">
+                                    <h1 class="text-center" data-th-text="#{features.title}">Features</h1>
+                                </div>
+                            </div>-->
+                <div class="row">
+                    <div class="col-sm-offset-2 col-sm-4 text-center">
+                        <img class="img-rounded" data-th-src="@{/images/shield.svg}" src="#" alt="" style="width: 100px; height: 100px;"/>
+                        <h2 class="text-center" data-th-text="#{features.1.title}">Data protection</h2>
+                        <p class="text-center" data-th-text="#{features.1.body}">Vašim data jsou chráněna modernimi technologiemi zabranujici neopravnene modifikaci nebo pristupu.</p>
+                        <!--                    <p class="text-center">Přístup k vašim datům je chráněn modernimi technologiemi jako je SLL nebo pokrocile metody prihlaseni.</p>-->
+                    </div>
+                    <!--                <div class="col-sm-offset-4 col-sm-4">
+                                        <h2 class="text-center" data-th-text="#{features.title}">Features</h2>
+                                        <p class="text-center" data-th-text="#{features.body}">With Show Tracker, you will never lost track of your last-seen episodes of your favourite shows again.</p>
+                                    </div>                -->
+                    <!--                <div class="col-sm-4">
+                                        <h2 class="text-center">Simple access</h2>
+                                        <p class="text-center"> Show Tracker dale obsahuje zpusoby ochrany proti neopravnene zmene vasich dat.</p>
+                                    </div>-->
+                    <div class="col-sm-4 text-center">
+                        <img class="img-rounded" data-th-src="@{/images/mobile.svg}" src="#" alt="" style="width: 100px; height: 100px;"/>
+                        <h2 class="text-center" data-th-text="#{features.2.title}">Simple access</h2>
+                        <p class="text-center" data-th-text="#{features.2.body}">Show Tracker muzete navstivit z tabletu, mobulu nebo bezneho pocitace. Ve vsech pripadech vam k tomu postaci prohlizec.</p>
+                    </div>
+                    <!--                <div class="col-sm-4">
+                                        <h2 class="text-center">Leave Us Feadback</h2>
+                                        <p class=""></p>
+                                        <form action="#" class="form-horizontal" method="post">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" name="name" placeholder="Enter your name" />
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" rows="4" name="feadback">My experiance with this site is...
+                                                </textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-success">Send Feadback</button>
+                                            </div>
+                                        </form>
+                                    </div>-->
+                </div>
+            </div>
+        </div>
+        <!--        <div class="jumbotron">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h1>Manage shows</h1>
+                                <p>Add new shows, update episodes.</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="../images/shows-list.png" data-th-attr="src=@{/images/shows-list.png},title=#{manageShows},alt=#{manageShows}" class="img-thumbnail" />
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+        <div class="jumbotron vert-padding" >
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1 data-th-text="#{explore.manageshows.title}" >Manage shows</h1>
+                        <p data-th-text="#{explore.manageshows.body}">Add new shows, update episodes.</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="carousel-manage-shows" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-manage-shows" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-manage-shows" data-slide-to="1"></li>
+                                <!--<li data-target="#carousel-example-generic" data-slide-to="2"></li>-->
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner wrapper-parent">
+                                <div class="item active">
+                                    <a href="../images/shows-list.png" data-th-href="@{/images/shows-list.png}" data-toggle="lightbox" data-parent=".wrapper-parent" data-gallery="manageshows"><img src="../images/shows-list.png" data-th-attr="src=@{/images/shows-list.png},title=#{manageShows},alt=#{manageShows}" class="img-thumbnail img-responsive" /></a>                                    
+                                </div>
+                                <div class="item">
+                                    <a href="../images/shows-edit.png" data-th-href="@{/images/shows-edit.png}" data-toggle="lightbox" data-parent=".wrapper-parent" data-gallery="manageshows"><img src="../images/shows-edit.png" data-th-attr="src=@{/images/shows-edit.png},title=#{manageShows},alt=#{manageShows}" class="img-thumbnail img-responsive" /></a>                                    
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-manage-shows" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-manage-shows" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div class="jumbotron vert-padding" style="background-color: #fff">
+            <div class="container">
+                <div class="row">                    
+                    <div class="col-sm-6">
+                        <div id="carousel-manage-account" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-manage-account" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-manage-account" data-slide-to="1"></li>
+                                <li data-target="#carousel-manage-account" data-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner wrapper-parent">
+                                <div class="item active">
+                                    <a href="../images/account.png" data-th-href="@{/images/account.png}" data-toggle="lightbox" data-parent=".wrapper-parent" data-gallery="manageaccount"><img src="../images/account.png" data-th-attr="src=@{/images/account.png},title=#{explore.manageaccount.title},alt=#{explore.manageaccount.title}" class="img-thumbnail img-responsive" /></a>                                    
+                                </div>
+                                <div class="item">
+                                    <a href="../images/account-password.png" data-th-href="@{/images/account-password.png}" data-toggle="lightbox" data-parent=".wrapper-parent" data-gallery="manageaccount"><img src="../images/account-password.png" data-th-attr="src=@{/images/account-password.png},title=#{explore.manageaccount.title},alt=#{explore.manageaccount.title}" class="img-responsive img-thumbnail" /></a>                                    
+                                </div>
+                                <div class="item">
+                                    <a href="../images/account-stats.png" data-th-href="@{/images/account-stats.png}" data-toggle="lightbox" data-parent=".wrapper-parent" data-gallery="manageaccount"><img src="../images/account-stats.png" data-th-attr="src=@{/images/account-stats.png},title=#{explore.manageaccount.title},alt=#{explore.manageaccount.title}" class="img-thumbnail img-responsive" /></a>
+                                </div>
+
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control" href="#carousel-manage-account" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-manage-account" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h1 data-th-text="#{explore.manageaccount.title}">Manage account</h1>
+                        <p data-th-text="#{explore.manageaccount.body}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--        <div class="jumbotron">
+                    <div class="container">
+                            <h2 class="text-center">Leave Us Feadback</h2>
+                            <p class=""></p>
+                            <form action="#" class="form-horizontal" method="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="name" placeholder="Enter your name" />
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="4" name="feadback">My experiance with this site is...
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success">Send Feadback</button>
+                                </div>
+                            </form>
+                        </div>
+                </div>-->
+        <!--        <div class="container">
+                    <h1>Welcome to the showtracker page</h1>
+                    <div data-th-if="${msg}" data-th-text="#{${msg}}" class="alert alert-info  col-sm-10 col-sm-offset-2"></div>
+        
+                    
+                    <a th:href="@{/auth/shows}">AUTH</a>
+                    <h1 th:text="'locale: ' + ${#locale}"></h1>
+                    <h2 th:text="'def. loc: ' + ${#locale.default}">${lang}</h2>
+                    <h3 th:text="'lang: ' + ${lang}"></h3>
+                    
+                    <div data-sec-authorize="isRememberMe()">
+                        <h2># This user is login by "Remember Me Cookies".</h2>
+                </div>
+         
+                <div data-sec-authorize="isFullyAuthenticated()">
+                        <h2># This user is login by username / password.</h2>
+                </div>
+                </div>-->
+
+
+
+        <footer data-th-replace="layout :: foot"></footer>
+
+        <!--<a href="someurl" data-toggle="lightbox">Launch modal</a>-->
+
+        <div data-th-replace="layout :: bottom-scripts"></div>
+
+        <!--<script src="../../../resources/assets/js/ekko-lightbox.min.js" data-th-src="@{/assets/js/ekko-lightbox.min.js}"></script>-->
+
+        <script type="text/javascript" src="http://rawgit.com/ashleydw/lightbox/master/dist/ekko-lightbox.min.js"></script>
+        <script type="text/javascript">
+//            $(document).ready(function(){
+//                $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+//                    event.preventDefault();
+//                    $(this).ekkoLightbox();
+//                });
+//            });
+
+            $(document).ready(function($) {
+
+                // delegate calls to data-toggle="lightbox"
+                $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+                    event.preventDefault();
+                    $(this).ekkoLightbox();
+//					return $(this).ekkoLightbox({
+//						always_show_close: true
+//					});
+                });
+
+            });
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,2 @@
+db.dialect=org.hibernate.dialect.MySQLDialect
+db.jndiName=jdbc/showTrackerDB

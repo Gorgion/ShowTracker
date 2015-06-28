@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title data-th-text="#{title.register}">TODO supply a title</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="../../../resources/assets/css/bootstrap.min.css" data-th-href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link href="../../../resources/assets/css/custom.css" data-th-href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div data-th-include="layout :: head"></div>
+        
+        <div class="container">
+            <div data-th-if="${msg}" data-th-text="#{${msg}}" class="alert alert-info  col-sm-10 col-sm-offset-2"></div>
+            <form action="#" method="post" data-th-action="@{/register}" data-th-object="${account}" class="form-horizontal" novalidate="">
+                <div data-th-if="${#fields.hasGlobalErrors()}" class="has-error">
+                    <p data-th-each="err : ${#fields.globalErrors()}" data-th-text="${err}">Global errors</p>
+                </div>
+                
+                <!--<input type="hidden" data-th-value="*{id}" data-th-name="id" />-->
+                
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('username')}? has-error">
+                    <label data-th-for="username" data-th-text="#{form.username} + ':'" class="control-label col-sm-2">Name</label>
+                    <div class="col-sm-5">
+                        <input type="text" data-th-field="*{username}" data-th-value="*{username}" class="form-control" required="" autofocus="" maxlength="50"/>
+                    </div>
+                    <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('username')}" data-th-errors="*{username}">Username error</div>
+                </div>
+                
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('mail')}? has-error">
+                    <label data-th-for="mail" data-th-utext="#{form.email} + ':&lt;span style=\'color:red\'&gt;*&lt;/span&gt;'" class="control-label col-sm-2">Mail</label>
+                    <div class="col-sm-5">
+                        <input type="email" data-th-field="*{mail}" data-th-value="*{mail}" class="form-control" required="" maxlength="30"/>
+                    </div>
+                    <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('mail')}" data-th-errors="*{mail}">Mail error</div>
+                </div>
+                
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('password')}? has-error">
+                    <label data-th-for="password" data-th-utext="#{form.passwd} + ':&lt;span style=\'color:red\'&gt;*&lt;/span&gt;'" class="control-label col-sm-2">Password</label>
+                    <div class="col-sm-5">
+                        <input type="password" data-th-field="*{password}" class="form-control" maxlength="50"/>
+                    </div>
+                    <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}">Password error</div>
+                </div>
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('password')}? has-error">
+                    <label data-th-for="password" data-th-utext="#{form.passwd.confirm} + ':&lt;span style=\'color:red\'&gt;*&lt;/span&gt;'" class="control-label col-sm-2">Confirm Password</label>
+                    <div class="col-sm-5">
+                        <input type="password" data-th-field="*{confirmPassword}" class="form-control" maxlength="50"/>
+                    </div>
+                    <!--<div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('password')}" data-th-errors="*{password}">Password error</div>-->
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary" data-th-text="#{shared.signup}">Submit</button>
+                        <a data-th-href="@{/}" class="btn btn-default" data-th-text="#{form.cancel}">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <footer data-th-include="layout :: foot"></footer>
+
+        <div data-th-replace="layout :: bottom-scripts"></div>
+    </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title data-th-text="#{title.shows}">TODO supply a title</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="../../../resources/assets/css/bootstrap.min.css" data-th-href="@{/assets/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link href="../../../resources/assets/css/custom.css" data-th-href="@{/assets/css/custom.css}" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+
+        <div data-th-include="layout :: head"></div>        
+
+        <div class="container">
+            <div data-th-if="${error}" data-th-text="#{${error}}" class="alert alert-danger col-sm-10 col-sm-offset-2"></div>
+                    
+            <!--<div class="panel panel-default">-->
+            <form action="#" data-th-action="@{'/auth/shows/edit/' + *{id}}"  method="post" data-th-object="${show}" class="form-horizontal" role="form">                                  
+                <div data-th-if="${#fields.hasGlobalErrors()}" class="has-error">
+                    <p data-th-each="err : ${#fields.globalErrors()}" data-th-text="${err}">Global errors</p>
+                </div>
+                
+                <input type="hidden" data-th-value="*{id}" data-th-name="id" />
+
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('name')}? has-error">
+                    <label for="name" data-th-text="#{show.name} + ':'" class="col-sm-2 control-label" ></label>
+                    <div class="col-sm-5" >
+                        <!--<input type="text" id="name" class="form-control" data-th-value="*{name}" name="name" />-->
+                        <input type="text" class="form-control" maxlength="100" required="" data-th-field="*{name}" data-th-value="*{name}" />
+                    </div>
+                    <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">Name error</div>
+                </div>
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('series')}? has-error">
+                    <label data-th-for="series" data-th-text="#{show.series} + ':'" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5">
+                        <input type="number" min="0" max="100" required="" data-th-value="*{series}" class="form-control" data-th-name="series" data-th-id="series" />
+                    </div>
+                    <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('series')}" data-th-errors="*{series}">Series error</div>
+                </div>
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('episode')}? has-error">
+                    <label data-th-for="episode" data-th-text="#{show.episode} + ':'" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5" >
+                        <input data-th-errorclass="has-error" min="0" max="200" type="number" data-th-value="*{episode}" class="form-control" name="episode" data-th-id="episode" />
+                    </div>
+                    <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('episode')}" data-th-errors="*{episode}">Episode error</div>
+                </div>
+                <div class="form-group" data-th-classappend="${#fields.hasErrors('note')}? has-error">
+                    <label data-th-for="note" data-th-text="#{show.note} + ':'" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5">
+                        <textarea rows="4" maxlength="255" data-th-value="*{note}" data-th-text="*{note}" class="form-control" name="note" data-th-id="note" ></textarea>
+                    </div>
+                    <div class="col-sm-5 help-block" data-th-if="${#fields.hasErrors('note')}" data-th-errors="*{note}">Note error</div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary" data-th-text="#{form.save}">Submit</button>
+                        <a data-th-if="!${created}"  data-th-href="@{/auth/shows}" class="btn btn-default" data-th-text="#{form.cancel}">Cancel</a>
+                    </div>
+                </div>
+            </form>
+            <hr data-th-if="!${created}" />
+            <form data-th-if="!${created}" action="#" data-th-action="@{'/auth/shows/delete/' + ${show.id}}" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-10 col-sm-offset-2">
+<!--                        <button type="submit" data-th-text="#{delete}" data-toggle="modal" data-target="#confirm-delete" name="delete" class="btn btn-danger"></button>-->
+                        <button type="submit" data-th-text="#{delete}"  name="delete" class="btn btn-danger"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--</div>-->
+        <footer data-th-include="layout :: foot"></footer>
+
+        <div data-th-replace="custom-dialogs :: confirm-dialog (show)"></div>
+        
+        <div data-th-replace="layout :: bottom-scripts"></div>
+        
+        <script type="text/javascript" src="../../../resources/assets/js/showtracker-0.1.js" data-th-src="@{/assets/js/showtracker-0.1.js}"></script>
+        
+        <script type="text/javascript">
+            $(document).ready(episodeAutoReset);
+        </script>
+    </body>
+</html>

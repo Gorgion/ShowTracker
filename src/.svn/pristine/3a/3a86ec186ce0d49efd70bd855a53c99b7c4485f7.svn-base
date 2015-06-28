@@ -1,0 +1,46 @@
+# To change this license header, choose License Headers in Project Properties.
+# To change this template file, choose Tools | Templates
+# and open the template in the editor.
+
+navbar.shows=Seri\u00e1ly
+shared.signin=P\u0159ihl\u00e1sit se
+shared.signout=Odhl\u00e1sit se
+shared.register=Registrovat se
+shared.lang.en=English
+shared.lang.cs=\u010ce\u0161tina
+shared.lang=Jazyk
+form.username=U\u017eivatelsk\u00e9 jm\u00e9no
+form.passwd=Heslo
+form.submit=Potvrdit
+form.cancel=Storno
+form.passwd.confirm=Heslo znovu
+form.email=E-mail
+form.rememberme=Z\u016fstat p\u0159ihl\u00e1\u0161en\u00fd
+form.input.placeholder.enter=Vlo\u017ete
+show.name=N\u00e1zev
+show.series=\u0158ada
+show.episode=Epizoda
+show.note=Pozn\u00e1mka
+navbar.newshow=Nov\u00fd seri\u00e1l
+add=P\u0159idat
+form.input.placeholder.show.name=N\u00e1zev seri\u00e1lnu
+edit=Upravit
+delete=Smazat
+password.change=Zm\u011bnit heslo
+user.account=\u00da\u010det
+title.confirmDelete=Potvrdit smaz\u00e1n\u00ed
+user.delete=Smazat \u00fa\u010det
+form.save=Ulo\u017eit
+user.account.statistics=Statistiky \u00fa\u010dtu
+user.account.statistics.logins=Posledn\u00ed p\u0159ihl\u00e1\u0161en\u00ed
+shared.signup=Registrovat
+learnmore=Dozv\u011bd\u011bt se v\u00edc
+backToHome=Zp\u011bt na \u00favodn\u00ed str\u00e1nku
+title.index=Show Tracker
+title.register=Show Tracker - Registrace
+title.profile=Show Tracker - U\u017eivatelsk\u00fd profil
+title.shows=Show Tracker - Seri\u00e1ly
+title.login=Show Tracker - P\u0159ihl\u00e1sit se
+title.error=Show Tracker - Chyba
+account.lostPassword.send=Poslat zpr\u00e1vu
+title.lostPassword=Show Tracker - Zapomenut\u00e9 heslo

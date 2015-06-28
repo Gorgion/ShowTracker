@@ -1,0 +1,62 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.sf.showtracker.security.service;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.sf.showtracker.dao.UserAccountAuthDaoImpl;
+import net.sf.showtracker.domain.UserAccountAuth;
+import static net.sf.showtracker.domain.UserAccountAuth.USER_ROLE;
+import net.sf.showtracker.exception.ServiceException;
+import net.sf.showtracker.exception.UserNotFoundException;
+import net.sf.showtracker.service.UserAccountAuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+/**
+ *
+ * @author Tomáš
+ */
+@Service("securityUserDetailsService")
+public class SecurityUserDetailsServiceImpl implements UserDetailsService
+{
+
+    @Autowired
+    private UserAccountAuthService userService;
+
+//    private static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+//    @Autowired
+//    private PasswordEncoder getPasswordEncoder()
+//    {
+//        return passwordEncoder();
+//    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
+        try
+        {
+            Future<UserAccountAuth> user = userService.getByEmail(username);
+//            System.out.println("\n---ok");
+            return user.get();
+        } catch (InterruptedException | ExecutionException ex)
+        {         
+            throw new UsernameNotFoundException("User not found.", ex);
+        }
+    }
+
+}

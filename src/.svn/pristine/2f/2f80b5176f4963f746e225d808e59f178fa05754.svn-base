@@ -1,0 +1,23 @@
+#DB properties:
+db.driver=com.mysql.jdbc.Driver
+
+#db.url=jdbc:mysql://${OPENSHIFT_DB_HOST}:${OPENSHIFT_DB_PORT}/shows_tracker
+#db.url=jdbc:mysql://$OPENSHIFT_DB_HOST:$OPENSHIFT_DB_PORT/shows_tracker
+#db.url=jdbc:mysql://${OPENSHIFT_DB_HOST}:${OPENSHIFT_DB_PORT}/${OPENSHIFT_APP_NAME}
+
+#db.url=jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/${OPENSHIFT_APP_NAME}
+#db.username=${OPENSHIFT_MYSQL_DB_USERNAME}
+#db.password=${OPENSHIFT_MYSQL_DB_PASSWORD}
+
+db.url=jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/${OPENSHIFT_APP_NAME}?useUnicode=true&characterEncoding=UTF-8
+db.username=netuser
+db.password=123qwe456asd
+
+#db.url=jdbc:mysql://127.0.0.1:3306/demo?useUnicode=true&characterEncoding=UTF-8
+#db.username=netuser
+#db.password=netuser0
+ 
+#Hibernate Configuration:
+hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+hibernate.show_sql=true
+entitymanager.packages.to.scan=net.sf.showtracker.domain

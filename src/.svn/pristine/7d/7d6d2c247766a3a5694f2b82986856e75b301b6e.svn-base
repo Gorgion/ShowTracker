@@ -1,0 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package net.sf.showtracker.dao;
+
+import java.util.List;
+import net.sf.showtracker.domain.LoginDetails;
+import net.sf.showtracker.domain.UserAccount;
+
+/**
+ *
+ * @author Tomáš Svoboda
+ */
+public interface LoginDetailsDao
+{
+    void create(LoginDetails details);
+    
+    List<LoginDetails> getAllByAccount(UserAccount account);
+}

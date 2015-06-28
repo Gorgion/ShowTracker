@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
+<html>
+    <!--xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">-->    
+    <!--        <head>
+                <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE"</title>
+            </head>-->
+    <body>
+        <div data-th-fragment="head" data-th-remove="tag">
+            <form data-th-action="@{/logout}" method="post" action="#" id="logoutForm">
+
+            </form>
+            <script type="text/javascript" charset="utf-8">
+                function logout() {
+                    document.getElementById("logoutForm").submit();
+                }
+                ;
+            </script>
+
+            <div class="navbar navbar-default navbar-static-top" role="navigation">
+                <div class="container">
+                    <!--                    <div> class="navbar-header">-->
+                    <!--                    <div class="dropdown" style="padding-bottom: 20px">
+                                            <a href="#" class="pull-right dropdown-toggle" data-toggle="dropdown">
+                                                <span data-th-text="#{navbar.lang} + ' '"></span>
+                                                <b class="caret"></b>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                <li><a href="#" data-th-href='@{/?lang=en}' data-th-text="#{navbar.lang.en}">English</a></li>
+                                                <li><a href="#" data-th-href='@{/?lang=cs}' data-th-text="#{navbar.lang.cs}">Czech</a></li>
+                                            </ul>
+                                        </div>-->
+                    <!--<div>-->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a data-th-href="@{/}" class="navbar-brand"><span class="glyphicon glyphicon-leaf"></span> Show Tracker</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a data-th-href="@{/auth/shows}"><span class="glyphicon glyphicon-home"></span><span data-th-text="' ' + #{navbar.shows}"></span></a></li>
+                            <!--                            <li><a data-th-href="@{/auth/shows/add}"><span data-th-text="#{navbar.newshow}"></span></a></li>-->
+                        </ul>
+                        <ul data-sec-authorize="isAuthenticated()" class="nav navbar-nav navbar-right">                            
+                            <!--                            <li data-th-switch="!${#strings.isEmpty(__sec:authentication(principal.userAccount.name)__)}">
+                                                            <a data-th-case="true" data-th-href="@{/auth/user/edit}"  ><span class="glyphicon glyphicon-user"></span> <span data-sec-authentication="principal.userAccount.name">Bob</span></a>
+                                                            <a data-th-case="false" data-th-href="@{/auth/user/edit}"  ><span class="glyphicon glyphicon-user"></span> <span data-sec-authentication="name">Bob</span></a>
+                                                        </li>-->
+                            <li >
+                                <a data-th-href="@{/auth/user/edit}"  ><span class="glyphicon glyphicon-user"></span> <span data-th-text="${!#strings.isEmpty(#authentication.principal.userAccount.name) ? #authentication.principal.userAccount.name : #authentication.name}">Bob</span></a>
+                            </li>
+                            <li>
+                                <form data-th-action="@{/logout}" method="post" action="#" id="noJSLogoutForm">
+                                    <button type="submit" class="btn navbar-btn btn-link" role="button"><span class="glyphicon glyphicon-log-out"></span><span data-th-text="' ' + #{shared.signout}"></span></button>
+                                </form>
+                            </li>
+                            <li class="nav-divider"></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span data-th-text="#{shared.lang} + ' '"></span>
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                    <!--<b class="caret"></b>-->
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li data-th-class="${#locale.language} == cs ? 'active'"><a href="#" data-th-href='@{?lang=cs}' data-th-text="#{shared.lang.cs}">Czech</a></li>
+                                    <li data-th-class="((${#locale.language} == en) or (${#locale.language} == ${#locale.default.language})) ? 'active'"><a href="#" data-th-href='@{?lang=en}' data-th-text="#{shared.lang.en}">English</a></li>                                    
+                                </ul>
+                            </li>
+                        </ul>                                
+
+                        <ul data-sec-authorize="isAnonymous()" class="nav navbar-nav navbar-right">
+                            <!--                            <li>
+                                                            <a data-th-href="@{/auth/user/}"  role="button"><span class="glyphicon glyphicon-user"></span> Anonymouse</a>
+                                                        </li>-->
+                            <!--<li class="nav-divider"></li>-->
+                            <li>
+                                <a data-th-href="@{/login}" ><span class="glyphicon glyphicon-log-in"></span><span data-th-text="' ' + #{shared.signin}"></span></a>
+                            </li>
+                            <li>
+                                <a data-th-href="@{/register}" ><span data-th-text="' ' + #{shared.register}"></span></a>
+                            </li>
+                            <li class="nav-divider"></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span data-th-text="#{shared.lang} + ' '"></span>
+                                    <!--<b class="caret"></b>-->
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li data-th-class="${#locale.language} == cs ? 'active'"><a href="#" data-th-href='@{?lang=cs}' data-th-text="#{shared.lang.cs}">Czech</a></li>
+                                    <li data-th-class="((${#locale.language} == en) or (${#locale.language} == ${#locale.default.language})) ? 'active'"><a href="#" data-th-href='@{?lang=en}' data-th-text="#{shared.lang.en}">English</a></li>                                    
+                                    <!--<li data-th-class="${#locale} == en ? 'active' : 'active'"><a href="#" >NON</a></li>-->                                    
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--                <div th:text="${#locale.default.language}"></div>
+                                <div th:text="${#locale.language}"></div>
+                                <div th:text="${#locale.default.language} == ${#locale.language}"></div>-->
+                <!--<div th:text="(${#locale} == cs) ? active : non"></div>-->
+                <!--<div th:text="${#locale.language != cs}"></div>-->
+                <!--<div th:text="${#locale.language} == cs"></div>-->
+                <!--<div th:text="(${#locale} == en) ? active : non"></div>-->
+                <!--<div th:text="(${#locale} == 'en')"></div>-->
+                <!--</div>-->
+            </div>
+        </div>       
+
+        <footer data-th-fragment="foot">
+            <div class="container">
+                <p>&copy; LibreNet 2014</p>
+                <p><a href="#" data-th-text="#{footer.backtotop}">Back to top</a></p>
+            </div>
+        </footer>
+
+        <div data-th-fragment="bottom-scripts" data-th-remove="tag">
+            <!-- Bootstrap core JavaScript
+        ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="../../../resources/assets/js/bootstrap.min.js" data-th-src="@{/assets/js/bootstrap.min.js}"></script>
+
+            <script>
+                $(document).ready(function() {
+                    $("#noJSLogoutForm").replaceWith('<a href="javascript:logout()" ><span class="glyphicon glyphicon-log-out"></span> <span data-th-text="#{shared.signout}"></span></a>');
+                });
+            </script>
+
+            <script>
+                (function(i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function() {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                ga('create', 'UA-54402059-1', 'auto');
+                ga('send', 'pageview');
+
+            </script>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,221 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.sf.showtracker.controller;
+
+import com.mysql.jdbc.ServerPreparedStatement;
+import java.security.Principal;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import net.sf.showtracker.domain.Show;
+import net.sf.showtracker.domain.UserAccount;
+import net.sf.showtracker.domain.UserAccountAuth;
+import net.sf.showtracker.exception.ServiceException;
+import net.sf.showtracker.exception.UserNotFoundException;
+import net.sf.showtracker.security.CurrentUsername;
+import net.sf.showtracker.service.ShowService;
+import net.sf.showtracker.service.ShowServiceImpl;
+import net.sf.showtracker.service.UserAccountService;
+import net.sf.showtracker.service.UserAccountServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+//import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+/**
+ *
+ * @author TomĂˇĹˇ
+ */
+@Controller
+@RequestMapping(value = "/auth/shows")
+//@SessionAttributes("user")
+public class ShowController
+{
+
+    @Autowired
+    private ShowService showService;
+
+    @Autowired
+    private UserAccountService userService;
+
+    @RequestMapping(/*value = "/list",*/method = RequestMethod.GET)
+    public String listShows(Model model, @CurrentUsername String userEmail)
+                {
+        UserAccount user = null;
+
+        try
+        {
+            user = userService.getByEmail(userEmail).get();
+        } catch (InterruptedException | ExecutionException ex)
+        {
+            throw new ServiceException("Listing all shows error.", ex);
+//            return "redirect:/500";
+        }
+        
+                    
+        List<Show> show;
+        
+        try
+        {
+            show = showService.getAllForUser(user).get();
+        } catch (InterruptedException | ExecutionException ex)
+        {
+            throw new ServiceException("Listing all shows error.", ex);
+//            return "redirect:/500";
+        }        
+        
+        model.addAttribute("shows", new ShowsWrapper(show));
+
+        return "show-list";
+    }
+
+//    @RequestMapping(value = "/add", method = RequestMethod.GET)
+//    public String createShow(Model model)
+//    {
+////        System.out.println("\n\n-----"+ showService.getById(1L).getName() + "-----\n\n");
+////        System.out.println("ADD>" + model + "<");
+//        model.addAttribute("show", new Show());
+//        return "show-item";
+//    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public String creatingShow(@RequestParam(value = "name", required = true) String name, Model model, RedirectAttributes redirectAttributes, @CurrentUsername String userEmail)//BindingResult result)
+    {
+        Show show = new Show();
+        try //BindingResult result)
+        {
+            UserAccount user = userService.getByEmail(userEmail).get();
+            System.out.println("\n----SHOW NMME\n>" + name + "<");
+            if (user != null)
+            {
+//                show = new Show();
+                show.setName(name);
+                show.setSeries(0);
+                show.setEpisode(0);
+                
+                show.setUser(user);
+                
+                show.setId(showService.create(show).get());                
+            }
+            
+            
+        } catch (InterruptedException | ExecutionException ex)
+        {
+            throw new ServiceException("Creating new show error.", ex);
+//            return "redirect:/500";
+        }
+        
+        redirectAttributes.addFlashAttribute("created", true);
+        
+        return "redirect:/auth/shows/edit/" + show.getId();
+//        return "redirect:/auth/shows";
+    }
+    
+    @RequestMapping(value = "/edit/{id}")
+    public String editingShow(@PathVariable Long id, Model model)
+    {
+        try
+        {
+            model.addAttribute("show", showService.getById(id).get());//new Show());
+        } catch (InterruptedException | ExecutionException ex)
+        {
+            throw new ServiceException("Update show error.", ex);
+//            return "redirect:/500";
+        }
+        
+        return "show-item";
+    }
+    
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String editingShow(@Valid @ModelAttribute/*(value = "showItem")*/ final Show show, BindingResult result, @CurrentUsername String userEmail)
+    {
+        try
+        {
+            if(result.hasErrors())
+            {
+                return "show-item";
+            }
+            
+            UserAccount user = userService.getByEmail(userEmail).get();
+            
+            if (user != null)
+            {
+                show.setUser(user);
+                
+                showService.update(show).get();
+            }
+            
+//        System.out.println("-----\n\n");
+            
+            
+        } catch (InterruptedException | ExecutionException ex)
+        {
+            throw new ServiceException("Update show error.", ex);
+//            return "redirect:/500";
+        }
+        
+        return "redirect:/auth/shows";
+    }
+    
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String deletingShow(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes)
+    {
+        try
+        {
+            showService.removeById(id).get();
+        } catch(InterruptedException | ExecutionException e)
+        {
+//            model.addAttribute("error", "error.service");
+//            result.reject("Error " + e);
+//            return "show-item";
+            throw new ServiceException("Delete show error.", e);
+//            return "redirect:/500";
+        }
+        
+        //redirectAttributes.addFlashAttribute("msg", "successfuly deleted");
+        
+        return "redirect:/auth/shows";
+    }
+    
+    public class ShowsWrapper
+    {
+        private List<Show> shows;
+
+        public ShowsWrapper()
+        {
+        }
+
+        public ShowsWrapper(List<Show> shows)
+        {
+            this.shows = shows;
+        }
+
+        public List<Show> getShows()
+        {
+            return shows;
+        }
+
+        public void setShows(List<Show> shows)
+        {
+            this.shows = shows;
+        }
+    }
+}

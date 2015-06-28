@@ -1,0 +1,37 @@
+<%-- 
+    Document   : showForm
+    Created on : 24.6.2014, 17:54:09
+    Author     : Tomáš
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page session="true"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Show form</title>
+    </head>
+    <body>
+
+        <form:form id="showForm" action="${pageContext.request.contextPath}/auth/shows/add" method="post">  <!-- "<c:url value = '/add' />" -->
+            <table>
+                <tbody>
+                    <tr>
+                        <!--td><formlabel path="name">Name:</formlabel></td-->
+                        <td>Name:</td>
+                        <td colspan="2"><input type="text" name="name" value="${show.name}" /></td>                        
+                    </tr> 
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Add" /></td>                    
+                        <td><input type="submit" value="Cancel" formaction="<c:url value="/auth/shows" />" formmethod="get" /></td>
+                    </tr>
+                </tbody>                
+            </table>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </form:form>
+    </body>
+</html>

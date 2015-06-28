@@ -1,0 +1,4 @@
+error.badCredentials=Invalid username or password!
+error.exist.email=Username already exist.
+error.passwordsNotEqual=passwords are not equal
+error.service=Service error occured.
